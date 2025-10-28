@@ -1,0 +1,46 @@
+{
+  "name": "Save Article To Notion",
+  "creator": "Piyush AI Automation 🤖",
+  "version": "1.0.0",
+  "trigger": {
+    "event": "chat_message_received",
+    "description": "Starts when a new chat message with an article link is received."
+  },
+  "steps": [
+    {
+      "id": "ai_summarize",
+      "type": "model",
+      "name": "Gemini 2.5 PRO",
+      "task": "Summarize the article content"
+    },
+    {
+      "id": "scraper",
+      "type": "tool",
+      "name": "website_scraper",
+      "task": "Extract article metadata from the link"
+    },
+    {
+      "id": "save_notion",
+      "type": "tool",
+      "name": "save_to_notion",
+      "task": "Create new Notion database page with title, summary, and URL"
+    },
+    {
+      "id": "notify_discord",
+      "type": "tool",
+      "name": "discord_notification",
+      "task": "Send a Discord message when the article is successfully saved"
+    }
+  ],
+  "connections": {
+    "trigger_to_ai": "chat_message_received -> ai_summarize",
+    "ai_to_scraper": "ai_summarize -> scraper",
+    "scraper_to_notion": "scraper -> save_notion",
+    "notion_to_discord": "save_notion -> notify_discord"
+  },
+  "description": "An AI automation workflow that summarizes and saves articles into Notion and alerts via Discord.",
+  "author": {
+    "name": "Piyush AI Automation",
+    "linkedin": "https://linkedin.com/in/piyush2707"
+  }
+}
